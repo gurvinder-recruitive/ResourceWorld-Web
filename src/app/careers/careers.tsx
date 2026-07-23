@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";  
 import { createSlug } from "@/utils/createSlug";  
+import { toast } from "react-toastify";
 type CareersProps = {
   initialJobId?: number;
 };
@@ -54,27 +55,46 @@ const Careers = ({ initialJobId }: CareersProps) => {
   }
 
   useEffect(() => {
-      fetch("https://localhost:7163/api/UserProfile/jobs")
-      .then((response)=> response.json())
-     .then((data) => {
-  setJobs(data);
+    console.log(
+ `${process.env.NEXT_PUBLIC_API_URL}/UserProfile/jobs`
+);
+  const fetchJobs = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/UserProfile/jobs`
+      );
 
-  if (data.length > 0) {
-    const jobExists = data.some(
-      (job: any) => job.jobId === initialJobId
-    );
+      const data = await response.json();
 
-    if (jobExists) {
-      setActiveItem(initialJobId!);
-    } else {
-      setActiveItem(data[0].jobId);
+      if (!response.ok) {
+        toast.error(data.message || "Failed to load jobs.");
+        return;
+      }
+
+      setJobs(data);
+
+      if (data.length > 0) {
+        const jobExists = data.some(
+          (job: any) => job.jobId === initialJobId
+        );
+
+        if (jobExists) {
+          setActiveItem(initialJobId!);
+        } else {
+          setActiveItem(data[0].jobId);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      toast.error("Unable to connect to the server.");
     }
-  }
-})
-      .catch((error) => console.error("Error fetching jobs:", error));  
-  },[]);
+  };
 
- const selectedJob = jobs.find(
+  fetchJobs();
+
+}, [initialJobId]);
+
+const selectedJob = jobs.find(
   (job: any) => job.jobId === activeItem
 );
 

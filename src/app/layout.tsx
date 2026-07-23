@@ -3,7 +3,8 @@ import { Geist, Geist_Mono , Nunito  } from "next/font/google";
 import "./globals.css";
 import "flag-icons/css/flag-icons.min.css";
 import Header from "@/components/common/Header";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const nunito = Nunito({
@@ -45,6 +46,13 @@ export default function RootLayout({
 
         <div className="w-full pt-24 md:pt-28 2xl:pt-36">
          {children}
+         <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          closeOnClick
+          pauseOnHover
+          theme="light"
+        />
         </div>
       </body>
     </html>
