@@ -81,7 +81,9 @@ const ApplyForJob = () => {
   const [ countries, setCountries] = useState<{ countryId: number; countryName: string }[]>([]);
   const [ skills, setSkills] = useState<{ skillId: number; skillName: string }[]>([]);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const router = useRouter();
+  const [typedSkill, setTypedSkill] = useState("");
+  const [completedStep1, setCompletedStep1] = useState(false);
+
  
 
   const prevStep = () => {
@@ -161,6 +163,8 @@ const ApplyForJob = () => {
 
     if (!isValid) return;
 
+     setCompletedStep1(true);
+
     const data = getValues();
     const selectedCountry = countries.find(
       (c) => c.countryName === data.country
@@ -214,7 +218,6 @@ const ApplyForJob = () => {
       result.data.userProfileId.toString()
     );
   }
-  console.log(result.message);
   toast.success(result.message || "Step 1 completed successfully.");
 
   if (currentStep < steps.length - 1) {
@@ -280,10 +283,11 @@ const onSubmit = async (data: applyJobFormData) => {
   }
 
   if (data.cv) {
-    formData.append("cv", data.cv);
+    formData.append("cvFile", data.cv);
   }
 
   try {
+    debugger
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/UserProfile/step-2?userProfileId=${userId}`,
       {
@@ -324,7 +328,6 @@ const onSubmit = async (data: applyJobFormData) => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/UserProfile/Countries`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("data",data);
         setCountries(data);
       })
       .catch((error) => console.error(error));
@@ -333,7 +336,6 @@ const onSubmit = async (data: applyJobFormData) => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/UserProfile/Skills`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("data",data);
         setSkills(data);
       })
       .catch((error) => console.error(error));
@@ -344,10 +346,13 @@ useEffect(() => {
   sessionStorage.removeItem("userProfileId");
 }, []);
 
+
+  const existingSkillNames = skills.map((skill) => skill.skillName);
   return (
     <>
       <div className="container pb-8 md:pb-12 2xl:pb-14">
         <div className="w-full max-w-[880px] mx-auto space-y-8">
+         
           <h3 className="text-center">{jobDetails?.title}</h3>
           <Controller
             name="profileImage"
@@ -355,6 +360,7 @@ useEffect(() => {
             render={({ field }) => (
               <>
                 <div className="relative w-20 h-20 2xl:w-24 2xl:h-24 mx-auto">
+               
                   <label
                     htmlFor="profileImage"
                     className={`w-full h-full rounded-full flex justify-center items-center cursor-pointer overflow-hidden
@@ -420,32 +426,36 @@ useEffect(() => {
             <Stepper
               steps={steps}
               currentStep={currentStep}
-              onStepChange={setCurrentStep}
+              onStepChange={(step) => {
+                if (step === 1 && !completedStep1) return;
+
+                setCurrentStep(step);
+              }}
             />
             {currentStep === 0 && (
               <div className="w-full flex flex-col gap-4">
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
-                  <h5 className="lg:basis-1/2 shrink-0">Full Name</h5>
+                  <h5 className="lg:basis-1/2 shrink-0">Full Name<span className="text-red-500">*</span></h5>
                   <div className="grow min-w-0">
                     <Input placeholder="Enter your full name" {...register("fullName")} className={errors.fullName ? "border-red-500 bg-red-50 focus-visible:ring-red-500" : ""}/>                   
                   </div>
                 </div>
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
-                  <h5 className="lg:basis-1/2 shrink-0">Email Address</h5>
+                  <h5 className="lg:basis-1/2 shrink-0">Email Address<span className="text-red-500">*</span></h5>
                   <div className="grow min-w-0">
                     <Input placeholder="Enter your email address" {...register("email")} className={errors.email ? "border-red-500 bg-red-50 focus-visible:ring-red-500" : ""} />
                   </div>
                 </div>
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
                   <h5 className="lg:basis-1/2 shrink-0">
-                    Location (City, State)
+                    Location (City, State)<span className="text-red-500">*</span>
                   </h5>
                   <div className="grow min-w-0">
                     <Input placeholder="Enter your location" {...register("location")} className={errors.location ? "border-red-500 bg-red-50 focus-visible:ring-red-500" : ""} />
                   </div>
                 </div>
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
-                  <h5 className="lg:basis-1/2 shrink-0">Country</h5>
+                  <h5 className="lg:basis-1/2 shrink-0">Country<span className="text-red-500">*</span></h5>
                   <div className="grow min-w-0">
                       <Controller
                       name="country"
@@ -487,13 +497,13 @@ useEffect(() => {
                   </div>
                 </div>
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
-                  <h5 className="lg:basis-1/2 shrink-0">Mobile No</h5>
+                  <h5 className="lg:basis-1/2 shrink-0">Mobile No<span className="text-red-500">*</span></h5>
                   <div className="grow min-w-0">
                     <Input placeholder="Enter your Mobile No" {...register("mobileNo")} className={errors.mobileNo ? "border-red-500 bg-red-50 focus-visible:ring-red-500" : ""} />
                   </div>
                 </div>
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
-                  <h5 className="lg:basis-1/2 shrink-0">Gender</h5>
+                  <h5 className="lg:basis-1/2 shrink-0">Gender<span className="text-red-500">*</span></h5>
                   <div className="grow min-w-0">
                     <Controller
                        name="gender"
@@ -528,7 +538,7 @@ useEffect(() => {
 
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
                   <h5 className="lg:basis-1/2 shrink-0">
-                    Tag Line for your profile
+                    Tag Line for your profile<span className="text-red-500">*</span>
                   </h5>
                   <div className="grow min-w-0">
                     <Input placeholder="Enter your Tag Line" {...register("tagLine")} className={errors.tagLine ? "border-red-500 bg-red-50 focus-visible:ring-red-500" : ""} />
@@ -539,17 +549,17 @@ useEffect(() => {
             {currentStep === 1 && (
               <div className="w-full flex flex-col gap-4">
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
-                  <h5 className="lg:basis-1/2 shrink-0">Executive Summary</h5>
+                  <h5 className="lg:basis-1/2 shrink-0">Executive Summary<span className="text-red-500">*</span></h5>
                   <div className="grow min-w-0">
                     <Textarea placeholder="Enter your executive summary." {...register("executiveSummary")} className={errors.executiveSummary? "border-red-500 bg-red-50 focus-visible:ring-red-500" : ""}/>
                   </div>
                 </div>
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
                   <h5 className="lg:basis-1/2 shrink-0">
-                    Skills (Enter multiple)
+                    Skills (Enter multiple)<span className="text-red-500">*</span>
                   </h5>
                   <div className="grow min-w-0">
-                    <Controller
+                    {/* <Controller
                       name="skills"
                       control={control}
                       render={({ field }) => (
@@ -594,7 +604,74 @@ useEffect(() => {
                           </ComboboxContent>
                         </Combobox>
                       )}
-                    />
+                    /> */}
+                      <Controller
+                        name="skills"
+                        control={control}
+                        render={({ field }) => {
+                          const selectedSkills = field.value || [];
+                          const newSkill = typedSkill.trim();
+
+                          const skillAlreadyExists = existingSkillNames.some(
+                            (skill) => skill.toLowerCase() === newSkill.toLowerCase()
+                          );
+
+                          const skillAlreadySelected = selectedSkills.some(
+                            (skill) => skill.toLowerCase() === newSkill.toLowerCase()
+                          );
+                         const showAddSkill =
+                            newSkill !== "" && !skillAlreadyExists && !skillAlreadySelected;
+
+                          const dropdownSkills = showAddSkill
+                            ? [...existingSkillNames, newSkill]
+                            : existingSkillNames;
+                          
+                          return (
+                            <Combobox
+                              items={dropdownSkills}
+                              multiple
+                              value={selectedSkills}
+                              onValueChange={(value) => {
+                                field.onChange(value);
+                                setTypedSkill("");
+                              }}
+                            >
+                              <ComboboxChips
+                                className={errors.skills ? "border-red-500 bg-red-50" : ""}
+                              >
+                                <ComboboxValue>
+                                  {selectedSkills.map((skill) => (
+                                    <ComboboxChip key={skill}>{skill}</ComboboxChip>
+                                  ))}
+                                </ComboboxValue>
+
+                                <ComboboxChipsInput
+                                  placeholder="Type or select skills"
+                                  value={typedSkill}
+                                  onChange={(event) => {
+                                    setTypedSkill(event.currentTarget.value);
+                                  }}
+                                 
+                                />
+                              </ComboboxChips>
+
+                              <ComboboxContent>
+                                <ComboboxEmpty>No skills found.</ComboboxEmpty>
+
+                                <ComboboxList>
+                                  {(skill) => (
+                                    <ComboboxItem key={skill} value={skill}>
+                                      {showAddSkill && skill === newSkill
+                                        ? `Add "${newSkill}"`
+                                        : skill}
+                                    </ComboboxItem>
+                                  )}
+                                </ComboboxList>
+                              </ComboboxContent>
+                            </Combobox>
+                          );
+                        }}
+                      />
                   </div>
                 </div>
                 <div className="w-full flex flex-col lg:flex-row  gap-2 lg:gap-4 ">
@@ -675,27 +752,33 @@ useEffect(() => {
                       control={control}
                       render={({ field }) => (
                         <RadioGroup
-                          value={field.value}
-                          onValueChange={(value) => {
-                            field.onChange(value);
+                            value={field.value}
+                            onValueChange={(value) => {
+                              queueMicrotask(() => {
+                                field.onChange(value);
 
-                            if (value === "no") {
-                              setValue("freelancerLink", "");
-                              clearErrors("freelancerLink");
-                            }
-                          }}
-                          className="flex gap-4 mt-1"
-                        >
-                          <div className="flex items-center gap-3">
-                            <RadioGroupItem value="yes" id="yes" />
-                            <Label htmlFor="yes">Yes</Label>
-                          </div>
+                                if (value === "no") {
+                                  setValue("freelancerLink", "", {
+                                    shouldDirty: true,
+                                    shouldValidate: false,
+                                  });
 
-                          <div className="flex items-center gap-3">
-                            <RadioGroupItem value="no" id="no" />
-                            <Label htmlFor="no">No</Label>
-                          </div>
-                        </RadioGroup>
+                                  clearErrors("freelancerLink");
+                                }
+                              });
+                            }}
+                            className="flex gap-4 mt-1"
+                          >
+                            <div className="flex items-center gap-3">
+                              <RadioGroupItem value="yes" id="yes" />
+                              <Label htmlFor="yes">Yes</Label>
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                              <RadioGroupItem value="no" id="no" />
+                              <Label htmlFor="no">No</Label>
+                            </div>
+                          </RadioGroup>
                       )}
                     />
                   </div>
@@ -719,54 +802,66 @@ useEffect(() => {
 
                             <div className="col-span-4 w-full">
                               <Label
-                                htmlFor="cvUpload"
-                                className={`border border-dashed h-26 cursor-pointer rounded-sm flex flex-col justify-center items-center bg-white hover:bg-light-gray
-                                ${
-                                  errors.cv
-                                    ? "border-red-500 bg-red-50"
-                                    : "border-black/30"
-                                }`}
-                              >
-                                <Upload className="size-5 mb-2" />
-                                Click to upload or drag and drop
+                                  htmlFor="cvUpload"
+                                  className={`border border-dashed h-26 cursor-pointer rounded-sm flex flex-col justify-center items-center bg-white hover:bg-light-gray
+                                    ${errors.cv ? "border-red-500 bg-red-50" : "border-black/30"}
+                                  `}
+                                >
+                                  {field.value ? (
+                                    <>
+                                      <Upload className="size-5 mb-2 text-green-600" />
+                                      <p className="font-medium">{field.value.name}</p>
+                                      <p className="text-xs text-muted-foreground">
+                                        {(field.value.size / 1024 / 1024).toFixed(2)} MB
+                                      </p>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Upload className="size-5 mb-2" />
+                                      <span>Click to upload CV</span>
+                                      <span className="text-xs text-muted-foreground">
+                                        PDF, DOC, or DOCX — maximum 5 MB
+                                      </span>
+                                    </>
+                                  )}
 
-                                <input
-                                  id="cvUpload"
-                                  type="file"
-                                  accept=".pdf,.doc,.docx"
-                                  className="hidden"
-                                  onChange={(e) => {
-                                    const file = e.target.files?.[0];
+                                  <input
+                                    id="cvUpload"
+                                    type="file"
+                                    accept=".pdf,.doc,.docx"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                      const file = e.target.files?.[0];
 
-                                    if (!file) return;
+                                      if (!file) return;
 
-                                    const allowedFormats = [
-                                      "application/pdf",
-                                      "application/msword",
-                                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                                    ];
+                                      const allowedFormats = [
+                                        "application/pdf",
+                                        "application/msword",
+                                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                      ];
 
-                                    const maxSize = 5 * 1024 * 1024; // 5 MB
+                                      const maxSize = 5 * 1024 * 1024;
 
-                                    if (!allowedFormats.includes(file.type)) {
-                                      setValue("cv", null);
-                                      e.target.value = "";
-                                      toast.error("Only PDF, DOC and DOCX files are allowed.");
-                                      return;
-                                    }
+                                      if (!allowedFormats.includes(file.type)) {
+                                        field.onChange(null);
+                                        e.target.value = "";
+                                        toast.error("Only PDF, DOC and DOCX files are allowed.");
+                                        return;
+                                      }
 
-                                    if (file.size > maxSize) {
-                                      setValue("cv", null);
-                                      e.target.value = "";
-                                      toast.error("CV size cannot be more than 5 MB.");
-                                      return;
-                                    }
+                                      if (file.size > maxSize) {
+                                        field.onChange(null);
+                                        e.target.value = "";
+                                        toast.error("CV size cannot be more than 5 MB.");
+                                        return;
+                                      }
 
-                                    field.onChange(file);
-                                    clearErrors("cv");
-                                  }}
-                                />
-                              </Label>
+                                      field.onChange(file);
+                                      clearErrors("cv");
+                                    }}
+                                  />
+                                </Label>
                             </div>
                           </div>
                         </>

@@ -1,6 +1,7 @@
+import Logo from "@/assets/logo.svg";
+import LaunchingSoon from '@/assets/images/launching.svg'
+import Image from "next/image";
 import Link from "next/link";
-import Image from "next/image"; 
-import "./comingSoon.css";
 
 export default function Home() {
   return (
@@ -20,51 +21,30 @@ export default function Home() {
     //     </button>
     //   </Link>
     // </div>
-     <div className="container-fluid">
-      <div className="row main-section">
-
-        <div className="col-lg-7 left-side">
-
-          <div className="shape shape1"></div>
-          <div className="shape shape2"></div>
-          <div className="shape shape3"></div>
-          <div className="shape shape4"></div>
-
-          <div className="circle-bg"></div>
-
-          <Image
-            src="/images/Happy-announcement-cuate.png"
-            alt="Coming Soon"
-            width={350}
-            height={350}
-            className="coming-image img-fluid"
-          />
+    <>
+    <div className='w-full h-[100dvh] grid lg:grid-cols-7'>
+        <div className="w-full h-[100dvh] hidden lg:flex lg:col-span-4 bg-[#f7dede] justify-center">
+          <Image src={LaunchingSoon} alt="Launching soon" priority />
         </div>
+        <div className='w-full lg:col-span-3 bg-[#f3f3f3] flex justify-center items-center p-8 xl:p-16'>
+            <div className='w-full space-y-14 xl:space-y-18'>
+                <div className='w-full'><Image src={Logo} alt="Logo" className='xl:w-72' /></div>
+                <div className='w-full space-y-4'>
+                    <div className='w-full text-lg xl:text-2xl 2xl:text-3xl'>🚀</div>
+                    <h1 className='xl:text-5xl 2xl:text-6xl'>We’re building <br/> something <span className='text-primary'>amazing..!</span></h1>
+                    <p className='xl:text-lg 2xl:text-2xl'>Stay tuned — website coming soon.</p>
+                     <Link href="/careers">
+                        <button>
+                           Go to careers page
+                        </button>
+                      </Link>
+                      <br />
+                </div>
 
-        <div className="col-lg-5 right-side">
-
-          <div className="logo">
-            <span>Recurso</span> <span>World</span>
-          </div>
-
-          <div className="rocket">🚀</div>
-
-          <h1 className="main-heading">
-            We’re building <br />
-            something <span className="highlight">amazing..!</span>
-          </h1>
-
-          <p className="sub-text">
-            Stay tuned — website coming soon.
-          </p>
-          <Link href="/careers">
-            <button>
-              Go to careers page
-            </button>
-          </Link>
+            </div>
         </div>
-
-      </div>
     </div>
+    
+    </>
   );
 }

@@ -172,126 +172,6 @@ const selectedJob = jobs.find(
                 </div>   
                 ))}
                 
-                {/* <div
-                  onClick={() => handleViewJobs("item2")}
-                  className={`w-full min-w-0 p-4 flex flex-col gap-2 border-b group hover:bg-light-blue cursor-pointer ${activeItem === "item2" ? "bg-light-blue" : ""}`}
-                >
-                  <div className="flex gap-3 w-full justify-between">
-                    <div className="flex gap-2 min-w-0 grow">
-                      <div className="shrink-0">
-                            <Image
-                              src={LogoMobile}
-                              alt="Logo"
-                              className="w-7 mt-2"
-                            />
-                      </div>
-                      <div className="flex flex-col">
-                        <h5>Graphic Designer</h5>
-                        <h6>Experience: 1-3 years</h6>
-                        <h6>India Bengaluru/Delhi</h6>
-                      </div>
-                    </div>
-                    <div className="shrink-0 whitespace-nowrap self-center">
-                      <Badge
-                        variant="successOutline"
-                        size="md"
-                        className="text-success visible xl:invisible group-hover:visible"
-                      >
-                        Apply
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  onClick={() => handleViewJobs("item3")}
-                  className={`w-full min-w-0 p-4 flex flex-col gap-2 border-b group hover:bg-light-blue cursor-pointer ${activeItem === "item3" ? "bg-light-blue" : ""}`}
-                >
-                  <div className="flex gap-3 w-full justify-between">
-                    <div className="flex gap-2 min-w-0 grow">
-                      <div className="shrink-0">
-                        <Image
-                          src={LogoMobile}
-                          alt="Logo"
-                          className="w-7 mt-2"
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <h5>Wordpress Developer</h5>
-                        <h6>Experience: 2-4 years</h6>
-                        <h6>India Delhi/Pune</h6>
-                      </div>
-                    </div>
-                    <div className="shrink-0 whitespace-nowrap self-center">
-                      <Badge
-                        variant="successOutline"
-                        size="md"
-                        className="text-success visible xl:invisible group-hover:visible"
-                      >
-                        Apply
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  onClick={() => handleViewJobs("item4")}
-                  className={`w-full min-w-0 p-4 flex flex-col gap-2 border-b group hover:bg-light-blue cursor-pointer ${activeItem === "item4" ? "bg-light-blue" : ""}`}
-                >
-                  <div className="flex gap-3 w-full justify-between">
-                    <div className="flex gap-2 min-w-0 grow">
-                      <div className="shrink-0">
-                        <Image
-                          src={LogoMobile}
-                          alt="Logo"
-                          className="w-7 mt-2"
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <h5>Email Marketing Executive</h5>
-                        <h6>Experience: 1-4 year</h6>
-                        <h6>United Arab Emirates</h6>
-                      </div>
-                    </div>
-                    <div className="shrink-0 whitespace-nowrap self-center">
-                      <Badge
-                        variant="successOutline"
-                        size="md"
-                        className="text-success visible xl:invisible group-hover:visible"
-                      >
-                        Apply
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  onClick={() => handleViewJobs("item5")}
-                  className={`w-full min-w-0 p-4 flex flex-col gap-2 border-b group hover:bg-light-blue cursor-pointer ${activeItem === "item5" ? "bg-light-blue" : ""}`}
-                >
-                  <div className="flex gap-3 w-full justify-between">
-                    <div className="flex gap-2 min-w-0 grow">
-                      <div className="shrink-0">
-                        <Image
-                          src={LogoMobile}
-                          alt="Logo"
-                          className="w-7 mt-2"
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <h5>IT Project Manager / Coordinator</h5>
-                        <h6>Experience: 4-6 years</h6>
-                        <h6>India/ Pakistan</h6>
-                      </div>
-                    </div>
-                    <div className="shrink-0 whitespace-nowrap self-center">
-                      <Badge
-                        variant="successOutline"
-                        size="md"
-                        className="text-success visible xl:invisible group-hover:visible"
-                      >
-                        Apply
-                      </Badge>
-                    </div>
-                  </div>
-                </div> */}
               </ScrollArea>
             </div>
             <div
@@ -914,6 +794,175 @@ const selectedJob = jobs.find(
                         Ability to balance technical knowledge with business
                         acumen and user-centered design principles.
                       </li>
+                    </ul>
+                  </div>
+                   <div className="w-full flex justify-end">
+                    <Button variant="accent" className="w-full sm:w-auto" onClick={handleApply}>
+                      Apply
+                    </Button>
+                  </div>
+                </div>
+              )}
+               {selectedJob?.jobId ===7 && (
+                <div className="w-full space-y-6">
+                  <h3>ASP.Net Backend Developer RW-IND008</h3>
+                  <div className="space-y-0.5">
+                    <h6>Experience: 4-6 years in the Industry</h6>
+                    <h6> Number of positions: 2 </h6>
+                    <h6>
+                      {" "}
+                      Working Hours: 10:00 AM to 7:00 PM (India Time Zone)
+                    </h6>
+                    <h6>Location: Bengaluru/Delhi, India or Pakistan</h6>
+                    <div className="flex gap-2 flex-wrap mt-4">
+                      <Badge variant="outline" size="md">Full Time</Badge>{" "}
+                      <Badge variant="outline" size="md">Remote</Badge>{" "}
+                      <Badge variant="outline" size="md">Direct Hire</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4> Required Skills:</h4>
+                    <p>
+                      Agile/ Jira/ Trello Board/ Scrum/ Analysis & Communication
+                      skills
+                    </p>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4> Job Description: </h4>
+                    <p>
+                      As an ASP.NET Backend Developer, you will play a key role in designing, developing, and maintaining scalable web applications that power Recurso.World, an upcoming global platform connecting professionals, employers, agencies and businesses.
+                      You will work closely with frontend developers, UI/UX designers, and product stakeholders to build secure, high-performance backend services, REST APIs, and database-driven applications. This role offers the opportunity to contribute to the architecture of a modern platform while working in a fast-paced Agile environment.
+                      Key Responsibilities:
+                    </p>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4> Backend Development </h4>
+                    <ul className="list-disc list-outside pl-5 space-y-1">
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Design, develop and maintain scalable web applications using ASP.NET Core and C#.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Build secure, reusable and high-performance RESTful APIs
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Develop business logic, authentication, authorization and backend services.
+                      </li>                      
+                    </ul>
+                  </div>
+                   <div className="space-y-0.5">
+                    <h4> Database Development </h4>
+                    <ul className="list-disc list-outside pl-5 space-y-1">
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Design and optimize database structures using Microsoft SQL Server 2022.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Write efficient stored procedures, views and optimized SQL queries.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Ensure data integrity, security and performance.
+                      </li>                      
+                    </ul>
+                  </div>
+                   <div className="space-y-0.5">
+                    <h4> Frontend Collaboration </h4>
+                    <ul className="list-disc list-outside pl-5 space-y-1">
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Work closely with React.js and Next.js developers to integrate backend APIs.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Support seamless communication between frontend and backend components.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Participate in UI integration and troubleshooting when required.
+                      </li>                      
+                    </ul>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4> Performance & Security </h4>
+                    <ul className="list-disc list-outside pl-5 space-y-1">
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Optimize application performance and scalability.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Implement authentication, authorization and secure coding practices.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Troubleshoot production issues and resolve performance bottlenecks.
+                      </li>
+                                          
+                    </ul>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4> Frontend Collaboration </h4>
+                    <ul className="list-disc list-outside pl-5 space-y-1">
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Participate in Agile ceremonies including Sprint Planning, Daily Stand-ups and Sprint Reviews.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Collaborate with cross-functional teams to understand business requirements and deliver quality solutions.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Perform code reviews and contribute to continuous improvement of development standards.
+                      </li>                     
+                    </ul>
+                  </div>
+                  <div className="space-y-0.5">
+                   <h4> Requirements: </h4>
+                    <ul className="list-disc list-outside pl-5 space-y-1">
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Bachelor's degree in Computer Science, Information Technology or a related discipline.  
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        2–5 years of experience developing applications using ASP.NET Core.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Strong proficiency in C# and object-oriented programming.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Hands-on experience with MS SQL Server 2022 including query optimization.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Experience building and consuming REST APIs.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Working knowledge of React.js and Next.js.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Experience with Git version control.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Understanding of Agile development methodologies.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Strong analytical and problem-solving skills.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Excellent communication and teamwork abilities.
+                      </li>
+                    </ul>
+                  </div>
+               
+                  <div className="space-y-0.5">
+                    <h4>Nice to Have </h4>
+                    <ul className="list-disc list-outside pl-5 space-y-1">
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Experience with Azure App Services or Microsoft Azure.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Knowledge of Docker or containerization.
+                      </li>
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Experience with Redis or caching mechanisms.
+                      </li>   
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Understanding of CI/CD pipelines.
+                      </li> 
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Exposure to AI API integrations (OpenAI, Gemini or similar).
+                      </li> 
+                      <li className=" text-base 2xl:text-xl font-normal text-444">
+                        Experience working on marketplace, SaaS or social networking platforms.
+                      </li>                   
                     </ul>
                   </div>
                    <div className="w-full flex justify-end">
